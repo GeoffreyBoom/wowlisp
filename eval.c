@@ -1,18 +1,29 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+struct match;
+
+typedef struct match match;
+
 struct match{
   int open;
   int close;
 };
 
-typedef struct match match;
+
 
 #define TYPE match
 #include "Array.h"
 #undef TYPE
 
-match* eval(char* read){
+void eval(char*);
+match* match_parenthesis(char*);
+
+void eval(char* read){
+  match_parenthesis(read);
+}
+
+match* match_parenthesis(char* read){
   int x = 0;
   int numO = 0;
   int numC = 0;
@@ -23,7 +34,6 @@ match* eval(char* read){
       numC++;
     x++;
   }
-
   int* open = (int*) malloc(sizeof(int) * (numO + 1));
   int* close = (int*) malloc(sizeof(int) * (numC + 1));
   
@@ -46,17 +56,30 @@ match* eval(char* read){
     x++;
   }
 
+
+  printf("%i\n",numO1);
   match* matches = (match*) malloc(sizeof(match) * (numO1+1));
-  for(x = 0; x < *(open-(sizeof(int))); x++){
-    if(numC1-x > 0){
-      match m =  {open[x],close[numC1-x-1]};
-      matches[x] = m;
-      m.open = -1;
-      m.close = -1;
-      matches[x+1] = m;
-    }
-    else{
-      printf("Parentheses don't match!\n");
+
+  if(numO > numC){
+    match m = {-1,-1};
+    matches[0] = m;
+    printf("TOO MANY OPEN PARENTHESES\n");
+  }
+  else if (numO < numC){
+    match m = {-1,-1};
+    matches[0] = m;
+    printf("TOO FEWS OPEN PARENTHESES\n");
+  }
+  else{
+    printf("~Just the right number of parentheses~\n");
+    for(x = 0; x < *(open-(sizeof(int))); x++){
+      if(numC1-x > 0){
+        match m =  {open[x],close[numC1-x-1]};
+        matches[x] = m;
+        m.open = -1;
+        m.close = -1;
+        matches[x+1] = m;
+      }
     }
   }
   return matches;

@@ -14,5 +14,8 @@
 #include "print.c"
 
 int main(){
-  eval((char*)"(hello");
+  while(1){
+    eval(read());
+  }
+  return 0;
 }
