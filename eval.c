@@ -13,24 +13,24 @@ struct match{
 
 
 #define TYPE match
-#include "Array.h"
+#include "array.h"
 #undef TYPE
 
 #ifndef ARR_INT
 #define ARR_INT
   #define TYPE int
-  #include "Array.h"
+  #include "array.h"
   #undef TYPE
 #endif
 
 void eval(char*);
-match* match_parenthesis(char*);
+ARRAY(match)* match_parenthesis(char*);
 
 void eval(char* read){
   match_parenthesis(read);
 }
 
-match* match_parenthesis(char* read){
+ARRAY(match)* match_parenthesis(char* read){
   int x = 0;
   int numO = 0;
   int numC = 0;

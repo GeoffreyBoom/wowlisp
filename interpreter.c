@@ -4,7 +4,7 @@
 #ifndef ARR_INT
 #define ARR_INT
   #define TYPE int
-  #include "Array.h"
+  #include "array.h"
   #undef TYPE
 #endif
 #include "eval.c"
