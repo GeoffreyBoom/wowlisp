@@ -41,8 +41,8 @@ match* match_parenthesis(char* read){
       numC++;
     x++;
   }
-  array_int* open = narray_int(numO);
-  array_int* close = narray_int(numC);
+  ARRAY(int)* open = narray_int(numO);
+  ARRAY(int)* close = narray_int(numC);
  
   x = 0;
   
@@ -53,7 +53,8 @@ match* match_parenthesis(char* read){
     if(read[x] == '(')
       *at_int(open,numO++) = x;
     if(read[x] == ')')
-      *at_int(close,numC++) = x;
+      *close->at(close,numC++) = x;
+      //*at_int(close,numC++) = x;
     x++;
   }
 
