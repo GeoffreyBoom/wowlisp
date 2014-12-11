@@ -3,11 +3,10 @@
 #define ARRAY(T) CONC(array, T)
 #define NEW(T) CONC(narray, T)
 #define DELETE(T) CONC(darray, T)
-
+#define AT(T) CONC(at, T)
 #include <stdlib.h>
 
 
-//making it so you can use array_TYPE instead of struct array_TYPE
 
 //struct for an array of ambiguous type. 
 struct ARRAY(TYPE){
@@ -15,6 +14,7 @@ struct ARRAY(TYPE){
   int size;
 };
 
+//making it so you can use array_TYPE instead of struct array_TYPE
 typedef struct ARRAY(TYPE) ARRAY(TYPE);
 
 ARRAY(TYPE)* NEW(TYPE)(int size){
@@ -22,6 +22,10 @@ ARRAY(TYPE)* NEW(TYPE)(int size){
   TYPE* a = malloc(sizeof(TYPE) * size);
   *array = (ARRAY(TYPE)) {.arr = a, .size = size};
   return array;
+}
+
+TYPE* AT(TYPE) (ARRAY(TYPE)* arr, int index){
+  return &arr->arr[index];
 }
 
 int LEN(TYPE)(ARRAY(TYPE)* arr){

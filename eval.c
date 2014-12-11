@@ -41,50 +41,43 @@ match* match_parenthesis(char* read){
       numC++;
     x++;
   }
-  int* open = (int*) malloc(sizeof(int) * (numO + 1));
-  int* close = (int*) malloc(sizeof(int) * (numC + 1));
-  
-  open[0] = numO;
-  close[0] = numC;
+  array_int* open = narray_int(numO);
+  array_int* close = narray_int(numC);
  
-  open = open+(sizeof(int));
-  close = close+(sizeof(int));
-
   x = 0;
-
-  int numO1 = 0;
-  int numC1 = 0;
+  
+  numC = 0;
+  numO = 0;
 
   while(read[x] != '\0'){
     if(read[x] == '(')
-      open[numO1++] = x;
+      *at_int(open,numO++) = x;
     if(read[x] == ')')
-      close[numC1++] = x;
+      *at_int(close,numC++) = x;
     x++;
   }
 
-  printf("i%i\n",numO1);
-  match* matches = malloc(sizeof(match) * (numO1+1));
-  printf("hello\n"); 
+  printf("i%i\n",numO);
+  array_match* matches = narray_match(numO);
   if(numO > numC){
     match m = {-1,-1};
-    matches[0] = m;
+    *at_match(matches,0) = m;
     printf("TOO MANY OPEN PARENTHESES\n");
   }
   else if (numO < numC){
     match m = {-1,-1};
-    matches[0] = m;
+    *at_match(matches,0) = m;
     printf("TOO FEWS OPEN PARENTHESES\n");
   }
   else{
     printf("~Just the right number of parentheses~\n");
-    for(x = 0; x < *(open-(sizeof(int))); x++){
-      if(numC1-x > 0){
-        match m =  {open[x],close[numC1-x-1]};
-        matches[x] = m;
+    for(x = 0; x < (len_int(open)); x++){
+      if(numC-x > 0){
+        match m = {*at_int(open,x),*at_int(close,numC-x-1)};
+        *at_match(matches,x) = m;
         m.open = -1;
         m.close = -1;
-        matches[x+1] = m;
+        *at_match(matches,x+1) = m;
       }
     }
   }
