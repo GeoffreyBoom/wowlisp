@@ -6,12 +6,15 @@
 #define AT(T) CONC(at, T)
 #include <stdlib.h>
 
-
+struct ARRAY(TYPE);
 
 //struct for an array of ambiguous type. 
 struct ARRAY(TYPE){
   TYPE* arr;
   int size;
+  TYPE* (* at)(ARRAY(TYPE)* arr, int index);
+  int (* len)(ARRAY(TYPE)* arr);
+  void (* del)(ARRAY(TYPE)* arr);
 };
 
 //making it so you can use array_TYPE instead of struct array_TYPE
