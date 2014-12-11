@@ -1,13 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define TYPE int
-#include "Array.h"
-#undef TYPE
-
-#define TYPE float
-#include "Array.h"
-#undef TYPE
+#ifndef ARR_INT
+#define ARR_INT
+  #define TYPE int
+  #include "Array.h"
+  #undef TYPE
+#endif
 
 #include "eval.c"
 #include "read.c"

@@ -16,6 +16,13 @@ struct match{
 #include "Array.h"
 #undef TYPE
 
+#ifndef ARR_INT
+#define ARR_INT
+  #define TYPE int
+  #include "Array.h"
+  #undef TYPE
+#endif
+
 void eval(char*);
 match* match_parenthesis(char*);
 
@@ -56,10 +63,9 @@ match* match_parenthesis(char* read){
     x++;
   }
 
-
-  printf("%i\n",numO1);
-  match* matches = (match*) malloc(sizeof(match) * (numO1+1));
-
+  printf("i%i\n",numO1);
+  match* matches = malloc(sizeof(match) * (numO1+1));
+  printf("hello\n"); 
   if(numO > numC){
     match m = {-1,-1};
     matches[0] = m;

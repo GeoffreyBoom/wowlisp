@@ -8,13 +8,14 @@
 
 
 //making it so you can use array_TYPE instead of struct array_TYPE
-typedef struct ARRAY(TYPE) ARRAY(TYPE);
 
 //struct for an array of ambiguous type. 
 struct ARRAY(TYPE){
   TYPE* arr;
   int size;
 };
+
+typedef struct ARRAY(TYPE) ARRAY(TYPE);
 
 ARRAY(TYPE)* NEW(TYPE)(int size){
   ARRAY(TYPE)* array = malloc(sizeof(ARRAY(TYPE)));
