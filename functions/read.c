@@ -1,4 +1,6 @@
-#include 
+#include <stddef.h>
+#include <stdio.h>
+#include "../storage/list.h"
 char* read();
 List* parse(char* read);
 char* scan();
@@ -6,16 +8,16 @@ List* getMatches(char* read);
 
 char* read(){
   char* read = scan();
+  List* parsed = parse(read);
+  return read;
 }
 
 List* parse(char* read){
-  List* paren = cons("nil", NULL);
+  List* paren = cons(NULL, NULL);
   int i = 0;
-  for(int i = 0; string[i] != '\0';i++){
-    if(string[i] == '('){
-      
-    }
+  for(i = 0; read[i] != '\0';i++){
   }
+  return paren;
 }
 
 char* scan(){
@@ -30,8 +32,4 @@ char* scan(){
   }
   free(buffer);
   return read;
-}
-
-List* getMatches(char* read){
-  int i = 0;
 }

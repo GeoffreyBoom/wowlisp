@@ -13,13 +13,13 @@ struct match{
 
 
 #define TYPE match
-#include "array.h"
+#include "../storage/array.h"
 #undef TYPE
 
 #ifndef ARR_INT
 #define ARR_INT
   #define TYPE int
-  #include "array.h"
+  #include "../storage/array.h"
   #undef TYPE
 #endif
 
