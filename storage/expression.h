@@ -12,7 +12,7 @@ struct Expression{
 
 Expression* Express(void* value, char* type){
   Expression* express = malloc(sizeof(Expression));
-  *Expression = (Expression) {.value = value, .type = type};
+  *express= (Expression) {.value = value, .type = type};
 };
 
 #endif

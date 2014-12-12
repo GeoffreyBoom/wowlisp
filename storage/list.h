@@ -1,41 +1,41 @@
 #ifndef LIST_H
 #define LIST_H
-#include "atom.h"
+#include "expression.h"
 #include <stdlib.h>
 
 struct List;
 typedef struct List List;
 
 struct List{
-  Atom* car;
-  Atom* cdr;
+  Expression* car;
+  Expression* cdr;
 };
 
-Atom* cons(Atom* car, Atom* cdr);
-Atom* cons(Atom* car, Atom* cdr){
+Expression* cons(Expression* car, Expression* cdr);
+Expression* cons(Expression* car, Expression* cdr){
   List* list = malloc(sizeof(List));
   list->car = car;
   list->cdr = cdr;
-  Atom* atom = malloc(sizeof(List));
-  *atom = (Atom) {.value = list, .type = "list"};
-  return atom;
+  Expression* express = malloc(sizeof(List));
+  *express = (Expression) {.value = list, .type = "list"};
+  return express;
 }
 
-Atom* car(Atom* atom){
-  if(strcmp(atom->type, "list") == 0){
-    return ((List*)atom->value)->car;
+Expression* car(Expression* express){
+  if(strcmp(express->type, "list") == 0){
+    return ((List*)express->value)->car;
   }
   else{
-    printf("Expressions of type %s do not have a CAR", atom->type);
+    printf("Expressions of type %s do not have a CAR", express->type);
   }
 }
 
-Atom* cdr(Atom* atom){
-  if(strcmp(atom->type, "list") == 0){
-    return ((List*)atom->value)->cdr;
+Expression* cdr(Expression* express){
+  if(strcmp(express->type, "list") == 0){
+    return ((List*)express->value)->cdr;
   }
   else{
-    printf("Expressions of type %s do not have a CDR", atom->type);
+    printf("Expressions of type %s do not have a CDR", express->type);
   }
 }
 
