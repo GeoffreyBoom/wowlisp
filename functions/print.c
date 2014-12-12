@@ -1,16 +1,22 @@
+#ifndef PRINT_H
+#define PRINT_H
 void print(Expression* express);
 
 void print(Expression* express){
+
   if(express == NULL){
+    printf("\nprinting null\n");
     printf("()");
   }
-  if(strcmp(express->type, "string")){
-    printf("%s", ((*(char**)(express->value))));
+  else if(strcmp(express->type, "string")==0){
+    printf("\nprinting string\n");
+    printf("%s", (((char*)(express->value))));
   }
-  if(strcmp(express->type, "int")){
+  else if(strcmp(express->type, "int")==0){
+    printf("\nprinting int\n");
     printf("%i", (*(int*)(express->value)));
   }
-  if(strcmp(express->type, "list") == 0){
+  else if(strcmp(express->type, "list") == 0){
     printf("(");
     if(express != NULL){
       print(car(express));
@@ -23,4 +29,6 @@ void print(Expression* express){
     }
     printf(")");
   }
+
 }
+#endif

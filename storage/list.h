@@ -2,6 +2,7 @@
 #define LIST_H
 #include "expression.h"
 #include <stdlib.h>
+#include <stddef.h>
 
 struct List;
 typedef struct List List;
@@ -27,6 +28,7 @@ Expression* car(Expression* express){
   }
   else{
     printf("Expressions of type %s do not have a CAR", express->type);
+    return NULL;
   }
 }
 
@@ -36,6 +38,7 @@ Expression* cdr(Expression* express){
   }
   else{
     printf("Expressions of type %s do not have a CDR", express->type);
+    return NULL;
   }
 }
 
