@@ -1,7 +1,18 @@
+#ifndef EXPRESSION_H
+#define EXPRESSION_H
+#include <stddef.h>
+#include <stdio.h>
+#include "list.h"
+struct Expression;
 typedef struct Expression Expression;
-
 struct Expression{
-  Expression* exp1;
+  void* value;
+  char* type;
 };
 
+Expression* Express(void* value, char* type){
+  Expression* express = malloc(sizeof(Expression));
+  *Expression = (Expression) {.value = value, .type = type};
+};
 
+#endif

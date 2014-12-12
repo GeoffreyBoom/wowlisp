@@ -2,18 +2,18 @@
 #include <stdio.h>
 #include "../storage/list.h"
 char* read();
-List* parse(char* read);
+Atom* parse(char* read);
 char* scan();
-List* getMatches(char* read);
+Atom* getMatches(char* read);
 
 char* read(){
   char* read = scan();
-  List* parsed = parse(read);
+  Atom* parsed = parse(read);
   return read;
 }
 
-List* parse(char* read){
-  List* paren = cons(NULL, NULL);
+Atom* parse(char* read){
+  Atom* paren = cons(NULL, NULL);
   int i = 0;
   for(i = 0; read[i] != '\0';i++){
   }

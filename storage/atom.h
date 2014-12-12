@@ -1,6 +1,3 @@
-
-
-
 #ifndef ATOM_H
 #define ATOM_H
 #include <stddef.h>
@@ -14,7 +11,7 @@ struct Atom{
 };
 
 Atom* new_atom(void* value, char* type){
-  Atom* atom = malloc(sizeof(atom));
+  Atom* atom = malloc(sizeof(Atom));
   (*atom) =(Atom) {value, type};
 }
 

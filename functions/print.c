@@ -1,31 +1,26 @@
-void print_atom(Atom* atom);
-void print_list(List* list);
+void print(Expression* express);
 
-void print_atom(Atom* atom){
-  if(atom == NULL){
+void print(Expression* express){
+  if(express == NULL){
     printf("()");
   }
-  if(atom->type == "string"){
-    printf("%s", ((*(char**)(atom->value))));
+  if(strcmp(express->type, "string")){
+    printf("%s", ((*(char**)(express->value))));
   }
-  if(atom->type == "int"){
-    printf("%i", (*(int*)(atom->value)));
+  if(strcmp(express->type, "int")){
+    printf("%i", (*(int*)(express->value)));
   }
-  if(atom->type== "list"){
-    print_list((List*)(atom->value));
-  }
-}
-void print_list(List* list){
-  if(list == NULL){
-    printf("()");
-  }
-  else{
-    print_atom(list->car);
-  }
-  if(list->cdr == NULL){
-    printf("()");
-  }
-  else{
-    print_list(list->cdr);
+  if(strcmp(express->type, "list") == 0){
+    printf("(");
+    if(express != NULL){
+      print(car(express));
+    }
+    if(cdr(express) == NULL){
+      printf("()");
+    }
+    else{
+      print(cdr(express));
+    }
+    printf(")");
   }
 }
