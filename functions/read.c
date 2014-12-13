@@ -38,10 +38,11 @@ int main(){
 #endif
 
 Expression* read(){
-  char* read = scan();
-  printf("scanned input: %s\n", read);
-  int* end = 0;
-  return parse(read,end);
+  char* r = scan();
+  printf("scanned input: %s\n", r);
+  int end = 0;
+  Expression* e = parse(r,&end);
+  return e;
 }
 /*
    parses string, returning an expression e
@@ -206,24 +207,23 @@ Expression* parseString(char* read, int* end){
 
 char* scan(){
   char* buffer = malloc(sizeof(char) * 1000);
-  char* string;
+  char* string = malloc(sizeof(char));
   while(!newline(buffer)){
     int i = 0;
-    int j = 0;
     scanf("%s",buffer);
-    char*buffer = readline(">");
-    for(;buffer[i] != '\0';i++);
-    string = strncat(string, read, i);
-    free(buffer);
+    printf("%s\n", buffer);
+    i = strlen(buffer);
+    string = strncat(string, buffer, i);
+    string = strncat(string, " ", 1);
   }
-
-  return read;
+  string = substr(string, 0, strlen(string)-2);
+  return string;
 }
 
 int newline(char* buffer){
   int i = 0;
-  while(buffer[i] != '\0'){
-    if(buffer[i] = '\n'){
+  while(buffer[i++] != '\0'){
+    if(buffer[i] == '.'){
       return 1;
     }
   }
