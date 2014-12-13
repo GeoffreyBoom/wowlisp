@@ -5,15 +5,18 @@ void print(Expression* express);
 void print(Expression* express){
 
   if(express == NULL){
-    printf("\nprinting null\n");
+    //printf("\nprinting null\n");
+    printf("NULL. THIS SHOULDN'T HAPPEN");
+  }
+  else if(strcmp(express->type, "nil")==0){
     printf("()");
   }
   else if(strcmp(express->type, "string")==0){
-    printf("\nprinting string\n");
+    //printf("\nprinting string\n");
     printf("%s", (((char*)(express->value))));
   }
   else if(strcmp(express->type, "int")==0){
-    printf("\nprinting int\n");
+    //printf("\nprinting int\n");
     printf("%i", (*(int*)(express->value)));
   }
   else if(strcmp(express->type, "list") == 0){

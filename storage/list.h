@@ -22,11 +22,7 @@ Expression* cons(Expression* car, Expression* cdr){
   return express;
 }
 
-Expression* NIL(){
-  Expression* express = malloc(sizeof(Expression));
-  *express = (Expression) {.value = NULL, .type = "nil"};
-  return express; 
-}
+
 
 Expression* car(Expression* express){
   if(strcmp(express->type, "list") == 0){

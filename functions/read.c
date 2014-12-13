@@ -1,10 +1,12 @@
 #include "../storage/list.h"
+#include "../storage/expression.h"
 #include "print.c"
 #include <stdlib.h>
 #include <stdio.h>
 #include <stddef.h>
 #include <ctype.h>
-char* read();
+#include <string.h>
+Expression* read();
 char* scan();
 Expression* parse(char* read, int* end);
 Expression* parseInt(char* read, int* end);
@@ -14,11 +16,32 @@ Expression* parseVariable(char* read, int* end);
 Expression* parseString(char* read, int* end);
 char* substr(char* str, int begin, int end);
 
-char* read(){
+#ifndef MAIN
+int main(){
+  print(read());
+  char* r = "\"hello\"dont print this";
+  r = " 1000 ";
+  int end = 0;
+  print(parseInt(r, &end));
+
+  printf("\n");
+  end = 0;
+  r = "(\"hello\"  \"world\")";
+  print(parse(r, &end));
+  printf("\n");
+
+  r = "()";
+  print(parse(r, &end));
+
+  printf("\n");
+}
+#endif
+
+Expression* read(){
   char* read = scan();
+  printf("scanned input: %s\n", read);
   int* end = 0;
-  Expression* parsed = parse(read,end);
-  return read;
+  return parse(read,end);
 }
 /*
    parses string, returning an expression e
@@ -30,14 +53,19 @@ char* read(){
 Expression* parse(char* read,int* end){
   Expression* car = NULL;
   if(car = parseList(read, end)){ 
+    printf("parsed list");
   }
   else if(car = parseInt(read, end)){
+    printf("parsed int");
   }
   else if(car = parseNil(read, end)){
+    printf("parsed nil");
   }
   else if(car = parseString(read, end)){
+    printf("parsed string");
   }
   else if(car = parseVariable(read, end)){
+    printf("parsed variable");
   }
   return car;
 }
@@ -45,9 +73,10 @@ Expression* parse(char* read,int* end){
 //parses a string and returns a list or null
 //sets end to the index after the list's end
 Expression* parseList(char* read, int* end){
-  Expression* parse = NULL;
+  Expression* parsed = NULL;
   int begin = 0;
   int i = 0;
+  //find parenthesis
   for(;read[i] != '\0';i++){
     if(read[i] == '('){
       begin = i;
@@ -57,15 +86,75 @@ Expression* parseList(char* read, int* end){
       return NULL;
     }
   }
+  i = i+1;
+  int devider = i;
+  //make a list of expressions.
+  Expression* expression;
+  Expression* list = NIL();
+  //while there are more expressions to be parsed
+  //parse them and add them to the array. 
+  while(expression = parse(substr(read,devider,strlen(read)), &i)){
+    devider += i;
+    list = cons(expression, list);
+    //print(list);
+  }
+
+  i = devider;
+  //if parenthesis is unmatched, quit the service, and find a good retirement home.
   if(read[i] == '\0'){
     return NULL;
   }
-  Expression* car = NULL; 
 
+  for(;read[i] != '\0';i++){
+    if(read[i] == ')'){
+      *end = i+1;
+      break;
+    }
+    else if(read[i] != ' '){
+      return NULL;
+    }
+  }
+  Expression* rlist = NIL(); 
+  if(!strcmp(list->type,"nil") == 0){
+    while(strcmp(cdr(list)->type, "nil") != 0){
+      rlist = cons(car(list), rlist);
+      list = cdr(list);
+    }
+    rlist = cons(car(list), rlist);
+  }
+  return rlist;
 }
 
 Expression* parseInt(char* read, int* end){
   Expression* parse = NULL;
+  int i = 0;
+  int begin = 0;
+  for(;read != '\0';i++){
+    if(isdigit(read[i])){
+      begin = i;
+      break;
+    }
+    else if(read[i] != ' '){
+      return NULL;
+    }
+  }
+  for(;read != '\0'; i++){
+    if(!isdigit(read[i])){
+      printf("%c\n", read[i]);
+      break;
+    }
+  }
+  if(read[i] == ' ' || read[i] == '\0'){
+    *end = i;
+  }
+  else{
+    return NULL;
+  }
+  parse = malloc(sizeof(Expression));
+  int* value = malloc(sizeof(int));
+  *value = atoi(substr(read,begin,*end));
+  *parse = (Expression) {.value = value, .type = "int"};
+  
   return parse;
 }
 
@@ -117,16 +206,28 @@ Expression* parseString(char* read, int* end){
 
 char* scan(){
   char* buffer = malloc(sizeof(char) * 1000);
-  int i = 0;
-  int j = 0;
-  scanf("%s",buffer);
-  for(;buffer[i] != '\0';i++);
-  char* read = malloc(sizeof(char) * j);
-  for(;j < i;j++){
-    read[j] = buffer[j];
+  char* string;
+  while(!newline(buffer)){
+    int i = 0;
+    int j = 0;
+    scanf("%s",buffer);
+    char*buffer = readline(">");
+    for(;buffer[i] != '\0';i++);
+    string = strncat(string, read, i);
+    free(buffer);
   }
-  free(buffer);
+
   return read;
+}
+
+int newline(char* buffer){
+  int i = 0;
+  while(buffer[i] != '\0'){
+    if(buffer[i] = '\n'){
+      return 1;
+    }
+  }
+  return 0;
 }
 
 //returns substring including begin, excluding end
@@ -137,15 +238,8 @@ char* substr(char* str, int begin, int end){
     sub[i-begin] = str[i];
   }
   sub[end] = '\0';
+  //printf("substring:%s\n",sub);
   return sub;
 }
 
-#ifndef MAIN
-int main(){
-  char* read = "e\"hello\"dont print this";
-  int end = 0;
-  print(parseString(read, &end));
-  print(NULL);
-  printf("\n");
-}
-#endif
+

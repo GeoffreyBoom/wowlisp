@@ -16,6 +16,12 @@ Expression* Express(void* value, char* type){
   *express= (Expression) {.value = value, .type = type};
 };
 
+Expression* NIL(){
+  Expression* express = malloc(sizeof(Expression));
+  *express = (Expression) {.value = NULL, .type = "nil"};
+  return express; 
+}
+
 const char* inttype = "int";
 const char* listtype = "list";
 const char* stringtype = "string";
