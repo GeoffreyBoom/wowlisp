@@ -11,6 +11,9 @@ void print(Expression* express){
   else if(strcmp(express->type, "nil")==0){
     printf("()");
   }
+  else if(strcmp(express->type, "variable")==0){
+    printf("%s ", (((char*)(express->value))));
+  }
   else if(strcmp(express->type, "string")==0){
     //printf("\nprinting string\n");
     printf("%s ", (((char*)(express->value))));
@@ -20,7 +23,6 @@ void print(Expression* express){
     printf("%i ", (*(int*)(express->value)));
   }
   else if(strcmp(express->type, "list") == 0){
-    printf("\nprinting list\n");
     printf("( ");
     while(strcmp(cdr(express)->type,"list") == 0){
       print(car(express));

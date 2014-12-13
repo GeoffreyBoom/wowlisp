@@ -23,6 +23,7 @@ int main(){
   in = (cons(in, in));
   print(in);
   while(1){
+    printf("\n");
     print(read());
   }
 
@@ -63,19 +64,19 @@ Expression* read(){
 Expression* parse(char* read,int* end){
   Expression* car = NULL;
   if(car = parseList(read, end)){ 
-    printf("parsed list");
+    //printf("parsed list");
   }
   else if(car = parseInt(read, end)){
-    printf("parsed int");
+    //printf("parsed int");
   }
   else if(car = parseNil(read, end)){
-    printf("parsed nil");
+    //printf("parsed nil");
   }
   else if(car = parseString(read, end)){
-    printf("parsed string");
+    //printf("parsed string");
   }
   else if(car = parseVariable(read, end)){
-    printf("parsed variable");
+    //printf("parsed variable");
   }
   return car;
 }
@@ -176,10 +177,30 @@ Expression* parseNil(char* read, int* end){
 Expression* parseVariable(char* read, int* end){
   Expression* parse = NULL;
   int i = 0;
+  while(read[i] == ' '){
+    i++;
+  }
   if(!isalpha(read[i])){
     return NULL;
   }
-  
+  int begin = i;
+  for(;isalnum(read[i]);i++){
+    if(isalpha(read[i])){
+      if(islower(read[i])){
+        read[i] = toupper(read[i]);
+      }
+    }
+  }
+  if(read[i] == ')' || read[i] == ' ' || read[i] == '\0'){
+    *end = i;
+  }
+  else{
+    return NULL;
+  }
+  parse = malloc(sizeof(Expression));
+  char* value = substr(read,begin,*end);
+  printf("%s\n",value);
+  *parse = (Expression) {.value = value, .type = "variable"};
   return parse;
 }
 
@@ -255,5 +276,3 @@ char* substr(char* str, int begin, int end){
   //printf("substring:%s\n",sub);
   return sub;
 }
-
-
