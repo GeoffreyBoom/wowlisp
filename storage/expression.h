@@ -20,5 +20,5 @@ const char* inttype = "int";
 const char* listtype = "list";
 const char* stringtype = "string";
 const char* variabletype = "variable";
-
+const char* niltype = "nil";
 #endif

@@ -17,9 +17,15 @@ Expression* cons(Expression* car, Expression* cdr){
   List* list = malloc(sizeof(List));
   list->car = car;
   list->cdr = cdr;
-  Expression* express = malloc(sizeof(List));
+  Expression* express = malloc(sizeof(Expression));
   *express = (Expression) {.value = list, .type = "list"};
   return express;
+}
+
+Expression* NIL(){
+  Expression* express = malloc(sizeof(Expression));
+  *express = (Expression) {.value = NULL, .type = "nil"};
+  return express; 
 }
 
 Expression* car(Expression* express){

@@ -5,13 +5,19 @@
 #include <stddef.h>
 #include <ctype.h>
 char* read();
-Expression* parse(char* read);
 char* scan();
-Expression* getMatches(char* read);
+Expression* parse(char* read, int* end);
+Expression* parseInt(char* read, int* end);
+Expression* parseList(char* read, int* end);
+Expression* parseNil(char* read, int* end);
+Expression* parseVariable(char* read, int* end);
+Expression* parseString(char* read, int* end);
+char* substr(char* str, int begin, int end);
 
 char* read(){
   char* read = scan();
-  Expression* parsed = parse(read);
+  int* end = 0;
+  Expression* parsed = parse(read,end);
   return read;
 }
 /*
@@ -21,24 +27,19 @@ char* read(){
      a variable
      an constant
 */
-Expression* parse(char* read){
-  Expression* expressions = cons(NULL, NULL);
-  int i = 0;
-  for(i = 0; read[i] != '\0';i++){
-     
+Expression* parse(char* read,int* end){
+  Expression* car = NULL;
+  if(car = parseList(read, end)){ 
   }
-  return expressions;
-}
-
-//returns substring including begin, excluding end
-char* substr(char* str, int begin, int end){
-  char* sub = malloc(sizeof(char) * (end - begin +1));
-  int i = begin;
-  for(;i < end; i++){
-    sub[i-begin] = str[i];
+  else if(car = parseInt(read, end)){
   }
-  sub[end] = '\0';
-  return sub;
+  else if(car = parseNil(read, end)){
+  }
+  else if(car = parseString(read, end)){
+  }
+  else if(car = parseVariable(read, end)){
+  }
+  return car;
 }
 
 //parses a string and returns a list or null
@@ -48,12 +49,34 @@ Expression* parseList(char* read, int* end){
   int begin = 0;
   int i = 0;
   for(;read[i] != '\0';i++){
+    if(read[i] == '('){
+      begin = i;
+      break;
+    }
+    else if(read[i] != ' '){
+      return NULL;
+    }
   }
+  if(read[i] == '\0'){
+    return NULL;
+  }
+  Expression* car = NULL; 
+
 }
 
-Expression* parseVariable(char* read){
+Expression* parseInt(char* read, int* end){
   Expression* parse = NULL;
-  
+  return parse;
+}
+
+Expression* parseNil(char* read, int* end){
+  Expression* parse = NULL;
+  return parse;
+}
+
+Expression* parseVariable(char* read, int* end){
+  Expression* parse = NULL;
+  return parse;
 }
 
 Expression* parseString(char* read, int* end){
@@ -65,6 +88,9 @@ Expression* parseString(char* read, int* end){
     if(read[i] == '"'){
       begin = i;
       break;
+    }
+    else if(read[i] != ' '){
+      return NULL;
     }
   }
   if(read[i] == '\0'){
@@ -103,12 +129,23 @@ char* scan(){
   return read;
 }
 
+//returns substring including begin, excluding end
+char* substr(char* str, int begin, int end){
+  char* sub = malloc(sizeof(char) * (end - begin +1));
+  int i = begin;
+  for(;i < end; i++){
+    sub[i-begin] = str[i];
+  }
+  sub[end] = '\0';
+  return sub;
+}
+
 #ifndef MAIN
 int main(){
-  char* read = "\"hello\"dont print this";
+  char* read = "e\"hello\"dont print this";
   int end = 0;
   print(parseString(read, &end));
   print(NULL);
-  printf("%i",end);
+  printf("\n");
 }
 #endif
