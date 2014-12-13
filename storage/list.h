@@ -29,7 +29,7 @@ Expression* car(Expression* express){
     return ((List*)express->value)->car;
   }
   else{
-    printf("Expressions of type %s do not have a CAR", express->type);
+    printf("Expressions of type %s do not have a CAR\n", express->type);
     return NULL;
   }
 }
@@ -39,7 +39,7 @@ Expression* cdr(Expression* express){
     return ((List*)express->value)->cdr;
   }
   else{
-    printf("Expressions of type %s do not have a CDR", express->type);
+    printf("Expressions of type %s do not have a CDR\n", express->type);
     return NULL;
   }
 }

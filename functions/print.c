@@ -13,23 +13,28 @@ void print(Expression* express){
   }
   else if(strcmp(express->type, "string")==0){
     //printf("\nprinting string\n");
-    printf("%s", (((char*)(express->value))));
+    printf("%s ", (((char*)(express->value))));
   }
   else if(strcmp(express->type, "int")==0){
     //printf("\nprinting int\n");
-    printf("%i", (*(int*)(express->value)));
+    printf("%i ", (*(int*)(express->value)));
   }
   else if(strcmp(express->type, "list") == 0){
-    printf("(");
-    if(express != NULL){
+    printf("\nprinting list\n");
+    printf("( ");
+    while(strcmp(cdr(express)->type,"list") == 0){
+      print(car(express));
+      express = cdr(express);
+    }
+    if(strcmp(cdr(express)->type, "nil") == 0){
       print(car(express));
     }
-    if(cdr(express) == NULL){
-      printf("()");
-    }
     else{
+      print(car(express));
+      printf(". ");
       print(cdr(express));
     }
+
     printf(")");
   }
 

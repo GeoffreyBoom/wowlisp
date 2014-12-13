@@ -18,7 +18,15 @@ char* substr(char* str, int begin, int end);
 
 #ifndef MAIN
 int main(){
-  print(read());
+  int e = 0;
+  Expression* in = parse("1",&e);
+  in = (cons(in, in));
+  print(in);
+  while(1){
+    print(read());
+  }
+
+ /*  
   char* r = "\"hello\"dont print this";
   r = " 1000 ";
   int end = 0;
@@ -34,6 +42,7 @@ int main(){
   print(parse(r, &end));
 
   printf("\n");
+  */
 }
 #endif
 
@@ -145,7 +154,7 @@ Expression* parseInt(char* read, int* end){
       break;
     }
   }
-  if(read[i] == ' ' || read[i] == '\0'){
+  if(read[i] == ' ' || read[i] == '\0' || read[i] == ')'){
     *end = i;
   }
   else{
@@ -166,6 +175,11 @@ Expression* parseNil(char* read, int* end){
 
 Expression* parseVariable(char* read, int* end){
   Expression* parse = NULL;
+  int i = 0;
+  if(!isalpha(read[i])){
+    return NULL;
+  }
+  
   return parse;
 }
 
